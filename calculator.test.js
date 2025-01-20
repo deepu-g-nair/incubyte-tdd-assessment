@@ -1,5 +1,5 @@
-const calculate = require('./calculator')
+const add = require('./calculator')
 
 test('returns 0 if the input is an empty string', ()=>{
-    expect(calculate('')).toBe(0)
+    expect(add('')).toBe(0)
 })

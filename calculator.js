@@ -1,5 +1,5 @@
-function calculate(input){
+function add(input){
     return 0
 }
 
-module.exports = calculate
+module.exports = add
