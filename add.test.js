@@ -1,4 +1,4 @@
-const add = require('./calculator')
+const add = require('./add')
 
 test('returns 0 if the input is an empty string', ()=>{
     expect(add('')).toBe(0)
