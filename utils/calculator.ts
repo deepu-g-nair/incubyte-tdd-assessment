@@ -1,5 +1,10 @@
 function add(input: string): number {
-    return 0;
+    if(input == ''){
+        return 0
+    }
+    else{
+        return Number(input)
+    }
 }
 
 export { add };
