@@ -3,7 +3,7 @@ function add(input: string): number {
         return 0
     }
     else{
-        const numbers = input.split(",").map(Number);
+        const numbers = input.split(/[\n,]+/).map(Number);
         if(numbers.length == 1){
             return numbers[0]
         }
