@@ -19,3 +19,8 @@ test("handle any amount of numbers", () => {
 test("handle new lines between numbers instead of commas", () => {
     expect(add("1\n2,3")).toBe(6);
 });
+
+test("handle custom delimiters", () => {
+    expect(add("//;\n1;2")).toBe(3);
+    expect(add("//|\n1|2|3")).toBe(6);
+});
