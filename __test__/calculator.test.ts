@@ -15,3 +15,7 @@ test("returns the sum if the input is comma seperated numbers", () => {
 test("handle any amount of numbers", () => {
     expect(add("1,5,6,1,5,6")).toBe(24);
 });
+
+test("handle new lines between numbers instead of commas", () => {
+    expect(add("1\n2,3")).toBe(6);
+});
