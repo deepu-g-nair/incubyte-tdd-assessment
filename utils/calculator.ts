@@ -15,6 +15,16 @@ function add(input: string): number {
         }
 
         const numbers = input.split(/[\n,]+/).map(Number);
+        let negativeNumbers: string[] = [];
+        if (input.length == 1 && Number(input) < 0) {
+            negativeNumbers = [input];
+        } else {
+            negativeNumbers = input.split(",").filter((num) => Number(num) < 0);
+        }
+
+        if (negativeNumbers.length > 0) {
+            throw new Error(`negative numbers not allowed ${negativeNumbers.join(", ")}`);
+        }
         if (numbers.length == 1) {
             return numbers[0];
         } else {
