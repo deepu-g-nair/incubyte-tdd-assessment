@@ -3,7 +3,14 @@ function add(input: string): number {
         return 0
     }
     else{
-        return Number(input)
+        const numbers = input.split(",").map(Number);
+        if(numbers.length == 1){
+            return numbers[0]
+        }
+        else{
+            const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+            return sum
+        }
     }
 }
 
