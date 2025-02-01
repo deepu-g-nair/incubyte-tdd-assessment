@@ -1,37 +1,23 @@
 function add(input: string): number {
-    if (input == "") {
-        return 0;
+    if (input === "") return 0;
+
+    let numbers: number[] = [];
+
+    if (input.startsWith("//")) {
+        const delimiter = input.charAt(2);
+        numbers = input.slice(4).split(delimiter).map(Number);
     } else {
-        if (input.startsWith("//")) {
-            const delimiter = input.charAt(2);
-            const numbers = input.slice(4).split(delimiter).map(Number);
-
-            if (numbers.length == 1) {
-                return numbers[0];
-            } else {
-                const sum = numbers.reduce((acc, curr) => acc + curr, 0);
-                return sum;
-            }
-        }
-
-        const numbers = input.split(/[\n,]+/).map(Number);
-        let negativeNumbers: string[] = [];
-        if (input.length == 1 && Number(input) < 0) {
-            negativeNumbers = [input];
-        } else {
-            negativeNumbers = input.split(",").filter((num) => Number(num) < 0);
-        }
-
-        if (negativeNumbers.length > 0) {
-            throw new Error(`negative numbers not allowed ${negativeNumbers.join(", ")}`);
-        }
-        if (numbers.length == 1) {
-            return numbers[0];
-        } else {
-            const sum = numbers.reduce((acc, curr) => acc + curr, 0);
-            return sum;
-        }
+        numbers = input.split(/[\n,]+/).map(Number);
     }
+
+    const negativeNumbers = numbers.filter((num) => num < 0);
+    if (negativeNumbers.length > 0) {
+        throw new Error(
+            `negative numbers not allowed ${negativeNumbers.join(", ")}`
+        );
+    }
+
+    return numbers.reduce((acc, curr) => acc + curr, 0);
 }
 
 export { add };
