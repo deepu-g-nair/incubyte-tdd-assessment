@@ -28,3 +28,10 @@ it("performs addition", () => {
     fireEvent.press(getByText("="));
     expect(getByTestId("display").props.children).toBe("3");
 });
+
+it("clears display", () => {
+    const { getByText, getByTestId } = render(<Calculator />);
+    fireEvent.press(getByText("5"));
+    fireEvent.press(getByText("AC"));
+    expect(getByTestId("display").props.children).toBe("");
+});
