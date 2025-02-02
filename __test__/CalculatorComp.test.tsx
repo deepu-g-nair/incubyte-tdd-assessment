@@ -22,16 +22,24 @@ it("updates display when numbers are pressed", () => {
 
 it("performs addition", () => {
     const { getByText, getByTestId } = render(<Calculator />);
-    fireEvent.press(getByText("1"));
-    fireEvent.press(getByText("+"));
-    fireEvent.press(getByText("2"));
-    fireEvent.press(getByText("="));
+    fireEvent.press(getByTestId("1"));
+    fireEvent.press(getByTestId("+"));
+    fireEvent.press(getByTestId("2"));
+    fireEvent.press(getByTestId("="));
     expect(getByTestId("display").props.children).toBe("3");
 });
 
 it("clears display", () => {
     const { getByText, getByTestId } = render(<Calculator />);
-    fireEvent.press(getByText("5"));
-    fireEvent.press(getByText("AC"));
+    fireEvent.press(getByTestId("5"));
+    fireEvent.press(getByTestId("AC"));
     expect(getByTestId("display").props.children).toBe("");
+});
+
+it("delete last typed number/operator", () => {
+    const { getByText, getByTestId } = render(<Calculator />);
+    fireEvent.press(getByTestId("9"));
+    fireEvent.press(getByTestId("2"));
+    fireEvent.press(getByTestId("-"));
+    expect(getByTestId("display").props.children).toBe("9");
 });
