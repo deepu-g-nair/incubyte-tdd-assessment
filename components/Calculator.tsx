@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
-import { add } from '../utils/calculator';
+import { add } from "../utils/calculator";
 
 export default function Calculator() {
-    const [display, setDisplay] = useState<string>("0");
+    const [display, setDisplay] = useState<string>("");
     const [firstOperand, setFirstOperand] = useState<number | null>(null);
     const [operator, setOperator] = useState<string | null>(null);
 
@@ -19,24 +19,29 @@ export default function Calculator() {
 
     const handleCalculate = (): void => {
         if (firstOperand === null || !operator) return;
-        
+
         const secondOperand: number = parseFloat(display);
         let result: number;
-        
+
         switch (operator) {
-            case '+':
-                const add_arg = `${firstOperand},${secondOperand}`
+            case "+":
+                const add_arg = `${firstOperand},${secondOperand}`;
                 result = add(add_arg);
                 break;
             default:
                 return;
         }
-        
+
         setDisplay(result.toString());
         setFirstOperand(null);
         setOperator(null);
     };
-    
+
+    const handleClear = () => {
+        setDisplay("");
+        setFirstOperand(null);
+        setOperator(null);
+    };
 
     return (
         <View>
@@ -49,18 +54,18 @@ export default function Calculator() {
                     onPress={() => handleNumberPress(num)}
                 />
             ))}
-            <Button testID="." title="." onPress={() => handleNumberPress(".")} />
+            <Button
+                testID="."
+                title="."
+                onPress={() => handleNumberPress(".")}
+            />
             <Button
                 testID="+"
                 title="+"
                 onPress={() => handleOperatorPress("+")}
             />
             <Button testID="=" title="=" onPress={handleCalculate} />
-            <Button testID="AC" title="AC" onPress={() => {
-                setDisplay("0");
-                setFirstOperand(null);
-                setOperator(null);
-            }} />
+            <Button testID="AC" title="AC" onPress={handleClear} />
         </View>
     );
 }
