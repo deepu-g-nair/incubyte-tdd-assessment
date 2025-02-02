@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, Text, TouchableOpacity, View } from "react-native";
 import { add } from "../utils/calculator";
+// import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Calculator() {
     const [display, setDisplay] = useState<string>("");
@@ -12,9 +13,11 @@ export default function Calculator() {
     };
 
     const handleOperatorPress = (op: string) => {
-        setFirstOperand(parseFloat(display));
-        setOperator(op);
-        setDisplay("0");
+        if (display !== "") {
+            setFirstOperand(parseFloat(display));
+            setOperator(op);
+            setDisplay("");
+        }
     };
 
     const handleCalculate = (): void => {
@@ -43,6 +46,15 @@ export default function Calculator() {
         setOperator(null);
     };
 
+    const handleBackspace = (): void => {
+        setDisplay((prevDisplay) => {
+            if (prevDisplay.length <= 1) {
+                return "0";
+            }
+            return prevDisplay.slice(0, -1);
+        });
+    };
+
     return (
         <View>
             <Text testID="display">{display}</Text>
@@ -66,6 +78,10 @@ export default function Calculator() {
             />
             <Button testID="=" title="=" onPress={handleCalculate} />
             <Button testID="AC" title="AC" onPress={handleClear} />
+            <TouchableOpacity testID="-" onPress={handleBackspace}>
+                {/* <Ionicons name="backspace-sharp" size={24} color="black" /> */}
+                <Text>Back</Text>
+            </TouchableOpacity>
         </View>
     );
 }
