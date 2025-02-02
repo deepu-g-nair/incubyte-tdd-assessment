@@ -19,3 +19,12 @@ it("updates display when numbers are pressed", () => {
     fireEvent.press(getByTestId("2"));
     expect(getByTestId("display").props.children).toBe("12");
 });
+
+it("performs addition", () => {
+    const { getByText, getByTestId } = render(<Calculator />);
+    fireEvent.press(getByText("1"));
+    fireEvent.press(getByText("+"));
+    fireEvent.press(getByText("2"));
+    fireEvent.press(getByText("="));
+    expect(getByTestId("display").props.children).toBe("3");
+});
