@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./index";
+import {Home} from "./index";
 import { StatusBar, StyleSheet, View } from "react-native";
 
 export default function RootLayout() {

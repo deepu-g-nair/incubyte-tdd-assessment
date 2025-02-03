@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import Calculator from "../components/Calculator";
+import Calculator from "@/components/Calculator";
 
 it("renders all components", () => {
     const { getByText, getByTestId } = render(<Calculator />);
@@ -33,7 +33,7 @@ it("clears display", () => {
     const { getByText, getByTestId } = render(<Calculator />);
     fireEvent.press(getByTestId("5"));
     fireEvent.press(getByTestId("AC"));
-    expect(getByTestId("display").props.children).toBe("");
+    expect(getByTestId("display").props.children).toBe("0");
 });
 
 it("delete last typed number/operator", () => {

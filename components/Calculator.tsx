@@ -1,24 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
+// import Ionicons from "@expo/vector-icons/Ionicons";
+import { add } from "@/utils/calculator";
 
-interface CalculatorProps {
-    display: string;
-    handleNumberPress: (num: string) => void;
-    handleOperatorPress: (operator: string) => void;
-    handleCalculate: () => void;
-    handleClear: () => void;
-    handleBackspace: () => void;
-}
+const Calculator: React.FC = () => {
+    const [display, setDisplay] = useState<string>("0");
 
-const Calculator: React.FC<CalculatorProps> = ({
-    display,
-    handleNumberPress,
-    handleOperatorPress,
-    handleCalculate,
-    handleClear,
-    handleBackspace,
-}) => {
+    const handleNumberPress = (num: string): void => {
+        setDisplay((prev) => (prev === "0" ? num : prev + num));
+    };
+
+    const handleOperatorPress = (op: string): void => {
+        setDisplay((prev) => {
+            if (prev === "0") return prev + op;
+            const lastChar = prev.slice(-1);
+            if (["+"].includes(lastChar)) {
+                return prev.slice(0, -1) + op;
+            }
+            return prev + op;
+        });
+    };
+
+    const handleCalculate = (): void => {
+        const operators = ["+"];
+        const operator = operators.find((op) => display.includes(op));
+        if (!operator) return;
+
+        const [first, second] = display.split(operator).map(parseFloat);
+        if (isNaN(first) || isNaN(second)) return;
+
+        let result: number;
+        switch (operator) {
+            case "+":
+                result = add(`${first},${second}`);
+                break;
+            default:
+                return;
+        }
+        setDisplay(result.toString());
+    };
+
+    const handleClear = (): void => {
+        setDisplay("0");
+    };
+
+    const handleBackspace = (): void => {
+        setDisplay((prev) => {
+            if (prev.length <= 1) return "0";
+            return prev.slice(0, -1);
+        });
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.displayContainer}>
@@ -40,14 +72,11 @@ const Calculator: React.FC<CalculatorProps> = ({
                         </TouchableOpacity>
                     ))}
                     <TouchableOpacity
-                        testID="."
+                        testID="-"
                         style={[styles.button, styles.topButton]}
                         onPress={() => handleBackspace()}
                     >
-                        <Ionicons
-                            style={styles.backButton}
-                            name="backspace-sharp"
-                        />
+                        <Text style={styles.numberText}>◀️</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -83,6 +112,7 @@ const Calculator: React.FC<CalculatorProps> = ({
                         </TouchableOpacity>
                     ))}
                     <TouchableOpacity
+                        testID={"+"}
                         style={[styles.button, styles.operatorButton]}
                         onPress={() => handleOperatorPress("+")}
                     >
@@ -107,7 +137,7 @@ const Calculator: React.FC<CalculatorProps> = ({
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        testID="0"
+                        testID="00"
                         style={[styles.button, styles.numberButton]}
                         onPress={() => handleNumberPress("00")}
                     >
@@ -146,7 +176,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         flex: 2,
         padding: 10,
-        justifyContent: 'flex-end'
+        justifyContent: "flex-end",
     },
     row: {
         flexDirection: "row",
