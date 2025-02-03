@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         flex: 2,
         padding: 10,
+        justifyContent: 'flex-end'
     },
     row: {
         flexDirection: "row",
